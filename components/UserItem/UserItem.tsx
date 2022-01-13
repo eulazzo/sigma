@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, Image, Pressable } from "react-native";
-import styles from "./styles";
+import styles from "./style";
 
 // import DEFAULT_IMAGE from "../../assets/images/noAvatar.png";
 // const noAvatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;

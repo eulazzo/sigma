@@ -3,25 +3,46 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
-import { ColorSchemeName, View, Text, Image, useWindowDimensions, StyleSheet, Pressable } from 'react-native';
-import { Feather, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'; 
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+  useNavigation,
+} from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
+import {
+  ColorSchemeName,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+} from "react-native";
+import {
+  Feather,
+  FontAwesome,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
-import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
+import { RootStackParamList } from "../types";
+import LinkingConfiguration from "./LinkingConfiguration";
 
-import ChatRoomScreen from '../screens/ChatRoomScreen';
-import HomeScreen from '../screens/HomeScreen';
+import ChatRoomScreen from "../screens/ChatRoomScreen";
+import HomeScreen from "../screens/HomeScreen";
+import UsersScreen from "../screens/UsersScren";
 
-
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation({
+  colorScheme,
+}: {
+  colorScheme: ColorSchemeName;
+}) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    >
       <RootNavigator />
     </NavigationContainer>
   );
@@ -30,7 +51,6 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
-
 
 function RootNavigator() {
   return (
@@ -51,12 +71,22 @@ function RootNavigator() {
           headerTitle: ChatRoomHeader,
         }}
       />
-       
-       
+      <Stack.Screen
+        name="UsersScreen"
+        component={UsersScreen}
+        options={{
+          headerTitleAlign: "center",
+          title: "Users",
+          headerTintColor: "#222",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 15,
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }
-
 
 const HomeHeader = (props) => {
   const navigation = useNavigation();
@@ -110,8 +140,6 @@ const HomeHeader = (props) => {
 };
 
 const ChatRoomHeader = (props) => {
- 
-
   return (
     <View
       style={{

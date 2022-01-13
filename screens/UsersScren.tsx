@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import UserItem from "../components/UserItem";
-  
+
+import Users from "../assets/dummy-data/Users";
 
 export default function UsersScreen() {
   return (
     <View style={styles.page}>
       <FlatList
-        data={data}
+        data={Users} 
         renderItem={({ item }) => <UserItem user={item} />}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
