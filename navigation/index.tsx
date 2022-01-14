@@ -119,7 +119,7 @@ const HomeHeader = (props) => {
         Sigma
       </Text>
 
-      <View style={{ flexDirection: "row", marginRight: 10 }}>
+      <View style={{ flexDirection: "row" }}>
         <Feather
           name="camera"
           size={24}

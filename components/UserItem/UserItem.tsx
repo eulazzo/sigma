@@ -11,8 +11,6 @@ import { ChatRoom, ChatRoomUser, User } from "../../src/models";
 const UserItem = ({ user }) => {
   const navigation = useNavigation();
 
-  console.log(user);
-
   const onPress = async () => {
     //TO_DO if there is already a chatroom between these two users
     //then redirect to the existing chatroom.
