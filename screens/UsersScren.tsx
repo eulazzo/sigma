@@ -2,13 +2,20 @@ import React, { useState, useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import UserItem from "../components/UserItem";
 
-import Users from "../assets/dummy-data/Users";
+import { DataStore } from "aws-amplify";
+import { User } from "../src/models";
 
 export default function UsersScreen() {
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    DataStore.query(User).then(setUsers);
+  }, []);
+
   return (
     <View style={styles.page}>
       <FlatList
-        data={Users} 
+        data={users}
         renderItem={({ item }) => <UserItem user={item} />}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
