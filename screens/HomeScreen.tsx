@@ -12,10 +12,11 @@ import ChatRoomItem from "../components/ChatRoomItem";
 
 import chatRoomsData from "../assets/dummy-data/ChatRooms";
 import { Auth, DataStore } from "aws-amplify";
-import { ChatRoom, ChatRoomUser } from "../src/models";
+import { ChatRoom, ChatRoomUser, Message } from "../src/models";
 
 export default function TabOneScreen() {
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
+   
   const logout = () => Auth.signOut();
 
   useEffect(() => {
@@ -32,6 +33,9 @@ export default function TabOneScreen() {
     };
     fetchChatRooms();
   }, []);
+
+
+  
 
   return (
     <View style={styles.page}>

@@ -1,35 +1,34 @@
-import { StyleSheet, useWindowDimensions } from 'react-native';
-
- 
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingVertical:2,
     paddingHorizontal:10,
+    paddingVertical:5
   },
+   
   image: {
     height: 50,
     width: 50,
     borderRadius: 30,
     marginRight: 10,
-    backgroundColor:"#000"
+    backgroundColor:"#222"
   },
   badgeContainer: {
-    backgroundColor: '#2c6bed',
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    backgroundColor: '#3777f0',
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#fafafa',
+    borderColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    left: 41,
-    top: 2,
+    left: 45,
+    top: 10,
   },
   badgeText: {
-    color: '#fafafa',
+    color: 'white',
     fontSize: 12
   },
   rightContainer: {
@@ -39,14 +38,17 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems:"center"
   },
   name: {
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 3,
+    opacity:0.9,
   },
   text: {
     color: 'grey',
+     
   }
 });
 

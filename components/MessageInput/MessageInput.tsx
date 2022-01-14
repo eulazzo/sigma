@@ -1,28 +1,60 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TextInput, 
-  Pressable, 
-  KeyboardAvoidingView, 
-  Platform 
-} from 'react-native';
-import { SimpleLineIcons, Feather, MaterialCommunityIcons, AntDesign, Ionicons } from '@expo/vector-icons'; 
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 
-const MessageInput = () => {
-  const [message, setMessage] = useState('');
+import { Message } from "../../src/models/";
+import { Auth, DataStore } from "aws-amplify";
 
-  const sendMessage = () => {
+import {
+  SimpleLineIcons,
+  Feather,
+  MaterialCommunityIcons,
+  AntDesign,
+  Ionicons,
+} from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
+import { ChatRoom } from "../../src/models";
+
+const MessageInput = ({ chatRoom }) => {
+  const [message, setMessage] = useState("");
+
+  const sendMessage = async () => {
     // send message
-    console.warn("sending: ", message);
+    const {
+      attributes: { sub: userAuthId },
+    } = await Auth.currentAuthenticatedUser();
 
-    setMessage('');
-  }
+    const newMessage = await DataStore.save(
+      new Message({
+        content: message,
+        userID: userAuthId,
+        chatroomID: chatRoom.id,
+      })
+    );
+    updateLastMessage(newMessage);
+    setMessage("");
+  };
+
+  const updateLastMessage = async (newMessage) => {
+    await DataStore.save(
+      ChatRoom.copyOf(chatRoom, (updatedChatRoom) => {
+        updatedChatRoom.LastMessage = newMessage;
+      })
+    );
+  };
+
+  
 
   const onPlusClicked = () => {
     console.warn("On plus clicked");
-  }
+  };
 
   const onPress = () => {
     if (message) {
@@ -30,48 +62,62 @@ const MessageInput = () => {
     } else {
       onPlusClicked();
     }
-  }
+  };
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.root} 
+    <KeyboardAvoidingView
+      style={styles.root}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={100}
     >
       <View style={styles.inputContainer}>
-        <SimpleLineIcons name="emotsmile" size={24} color="#595959" style={styles.icon} />
-        
-        <TextInput 
+        <SimpleLineIcons
+          name="emotsmile"
+          size={24}
+          color="#595959"
+          style={styles.icon}
+        />
+
+        <TextInput
           style={styles.input}
           value={message}
           onChangeText={setMessage}
           placeholder="Write something..."
         />
-        
+
         <Feather name="camera" size={24} color="#595959" style={styles.icon} />
-        <MaterialCommunityIcons name="microphone-outline" size={24} color="#595959" style={styles.icon} />
+        <MaterialCommunityIcons
+          name="microphone-outline"
+          size={24}
+          color="#595959"
+          style={styles.icon}
+        />
       </View>
       <Pressable onPress={onPress} style={styles.buttonContainer}>
-        {message ? <Ionicons name="send" size={18} color="white" /> : <AntDesign name="plus" size={24} color="white" />}
+        {message ? (
+          <Ionicons name="send" size={18} color="white" />
+        ) : (
+          <AntDesign name="plus" size={24} color="white" />
+        )}
       </Pressable>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   root: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 10,
   },
   inputContainer: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: "#f2f2f2",
     flex: 1,
     marginRight: 10,
     borderRadius: 25,
     borderWidth: 1,
-    borderColor: '#dedede',
-    alignItems: 'center',
-    flexDirection: 'row',
+    borderColor: "#dedede",
+    alignItems: "center",
+    flexDirection: "row",
     padding: 5,
   },
   input: {
@@ -84,15 +130,15 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: 40,
     height: 40,
-    backgroundColor: '#3777f0',
+    backgroundColor: "#3777f0",
     borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 35,
-  }
+  },
 });
 
-export default MessageInput
+export default MessageInput;

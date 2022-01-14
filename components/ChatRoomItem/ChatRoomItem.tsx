@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Text, Image, View, Pressable, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import styles from "./styles";
-import { User } from "../../src/models";
+import { Message, User } from "../../src/models";
 import { Auth, DataStore } from "aws-amplify";
 import { ChatRoomUser } from "../../src/models";
 
 import DEFAULT_IMAGE from "../../assets/images/avatar.png";
+import { DataStoreClass } from "@aws-amplify/datastore";
 const avatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
 
 export default function ChatRoomItem({ chatRoom }) {
   // const [users, setUsers] = useState<User[]>([]); //all user in this chatRoom
   const [user, setUser] = useState<User | null>(null); //the display user
+  const [lastMessage, setLastMessage] = useState<Message | undefined>();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -31,6 +33,14 @@ export default function ChatRoomItem({ chatRoom }) {
     };
 
     fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    if (!chatRoom.chatRoomLastMessageId) return;
+
+    DataStore.query(Message, chatRoom.chatRoomLastMessageId).then(
+      setLastMessage
+    );
   }, []);
 
   const onPress = () => {
@@ -58,8 +68,8 @@ export default function ChatRoomItem({ chatRoom }) {
               <Text style={styles.text}>11:21Am</Text>
             </View>
             <Text numberOfLines={1} style={styles.text}>
-              ashdashdusahdusahduashd shdusahdu hsud hush
-              {/* {chatRoom.lastMessage?.content} */}
+              {lastMessage?.content ||
+                `Start A Conversation With ${user?.name}`}
             </Text>
           </View>
         </>
