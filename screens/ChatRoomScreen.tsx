@@ -43,7 +43,6 @@ export default function ChatRoomScreen() {
         }
       );
       setMessages(fetchedMessages);
-      console.log("descend",fetchedMessages)
     } catch (error) {
       console.log(error);
     }
@@ -66,7 +65,6 @@ export default function ChatRoomScreen() {
       console.log(error);
     }
   };
-
 
   return (
     <SafeAreaView style={styles.page}>

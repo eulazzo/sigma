@@ -1,0 +1,13 @@
+{
+  "resourceName": "signalCloneStorage",
+  "policyUUID": "2ceb2408",
+  "bucketName": "signalclone4086344def7b4e8abc576055b7479884",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

@@ -14,7 +14,7 @@ export default function ChatRoomItem({ chatRoom }) {
   const [user, setUser] = useState<User | null>(null); //the display user
   const [lastMessage, setLastMessage] = useState<Message | undefined>();
   const navigation = useNavigation();
-  console.log("value");
+ 
   useEffect(() => {
     const fetchUsers = async () => {
       const {
@@ -25,9 +25,7 @@ export default function ChatRoomItem({ chatRoom }) {
         .filter((chatRoomUser) => chatRoomUser.chatRoom.id === chatRoom.id)
         .map((chatRoomUser) => chatRoomUser.user);
 
-      // setUsers(fetchedUsers);
-
-      
+      // setUsers(fetchedUsers)
 
       //To not show myself on the chat room
       setUser(fetchedUsers.find((user) => user.id !== authUserID) || null);
