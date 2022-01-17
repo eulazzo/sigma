@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import EmojiSelector from "react-native-emoji-selector";
 
 import { Message } from "../../src/models/";
 import { Auth, DataStore } from "aws-amplify";
@@ -24,6 +25,7 @@ import { ChatRoom } from "../../src/models";
 
 const MessageInput = ({ chatRoom }) => {
   const [message, setMessage] = useState("");
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
 
   const sendMessage = async () => {
     // send message
@@ -40,6 +42,7 @@ const MessageInput = ({ chatRoom }) => {
     );
     updateLastMessage(newMessage);
     setMessage("");
+    setIsEmojiPickerOpen(false)
   };
 
   const updateLastMessage = async (newMessage) => {
@@ -50,63 +53,77 @@ const MessageInput = ({ chatRoom }) => {
     );
   };
 
-  
-
-  const onPlusClicked = () => {
-    console.warn("On plus clicked");
-  };
-
   const onPress = () => {
     if (message) {
       sendMessage();
-    } else {
-      onPlusClicked();
     }
   };
 
+  const sendEmoji = async () => {};
+
   return (
     <KeyboardAvoidingView
-      style={styles.root}
+      style={{ ...styles.root, height: isEmojiPickerOpen ? "50%" : "auto" }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={100}
     >
-      <View style={styles.inputContainer}>
-        <SimpleLineIcons
-          name="emotsmile"
-          size={24}
-          color="#595959"
-          style={styles.icon}
-        />
+      <View style={styles.row}>
+        <View style={styles.inputContainer}>
+          <Pressable
+            onPress={() =>
+              setIsEmojiPickerOpen((currentValue) => !currentValue)
+            }
+          >
+            <SimpleLineIcons
+              name="emotsmile"
+              size={24}
+              color="#595959"
+              style={styles.icon}
+            />
+          </Pressable>
 
-        <TextInput
-          style={styles.input}
-          value={message}
-          onChangeText={setMessage}
-          placeholder="Write something..."
-        />
+          <TextInput
+            style={styles.input}
+            value={message}
+            onChangeText={setMessage}
+            placeholder="Write something..."
+          />
 
-        <Feather name="camera" size={24} color="#595959" style={styles.icon} />
-        <MaterialCommunityIcons
-          name="microphone-outline"
-          size={24}
-          color="#595959"
-          style={styles.icon}
-        />
+          <Feather
+            name="camera"
+            size={24}
+            color="#595959"
+            style={styles.icon}
+          />
+          <MaterialCommunityIcons
+            name="microphone-outline"
+            size={24}
+            color="#595959"
+            style={styles.icon}
+          />
+        </View>
+        <Pressable onPress={onPress} style={styles.buttonContainer}>
+          {message ? (
+            <Ionicons name="send" size={18} color="white" />
+          ) : (
+            <AntDesign name="plus" size={24} color="white" />
+          )}
+        </Pressable>
       </View>
-      <Pressable onPress={onPress} style={styles.buttonContainer}>
-        {message ? (
-          <Ionicons name="send" size={18} color="white" />
-        ) : (
-          <AntDesign name="plus" size={24} color="white" />
-        )}
-      </Pressable>
+      {isEmojiPickerOpen && (
+        <EmojiSelector
+          columns={12}
+          onEmojiSelected={(emoji) =>
+            setMessage((currentMessage) => currentMessage + emoji)
+          }
+        />
+      )}
     </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
-    flexDirection: "row",
     padding: 10,
   },
   inputContainer: {
@@ -138,6 +155,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 35,
+  },
+  row: {
+    flexDirection: "row",
   },
 });
 

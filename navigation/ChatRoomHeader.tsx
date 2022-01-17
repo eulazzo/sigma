@@ -18,6 +18,7 @@ const ChatRoomHeader = ({ id, children }) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      if (!id) return;
       const {
         attributes: { sub: authUserID },
       } = await Auth.currentAuthenticatedUser();
