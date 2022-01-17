@@ -1,8 +1,3 @@
-/**
- * If you are not familiar with React Navigation, check out the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import {
   NavigationContainer,
   DefaultTheme,
@@ -32,7 +27,9 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import HomeScreen from "../screens/HomeScreen";
 import UsersScreen from "../screens/UsersScren";
-
+import UserProfileScreen from "../screens/UserProfileScreen";
+import ChatRoomHeader from "./ChatRoomHeader";
+import HomeHeader from "./HomeHeader";
 export default function Navigation({
   colorScheme,
 }: {
@@ -48,8 +45,6 @@ export default function Navigation({
   );
 }
 
-// A root stack navigator is often used for displaying modals on top of all other content
-// Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -59,17 +54,19 @@ function RootNavigator() {
         name="Home"
         component={HomeScreen}
         options={{
-          headerTitle: (props) => <HomeHeader {...props} />,
+          headerTitle: (props) => <HomeHeader />,
         }}
       />
       <Stack.Screen
         name="ChatRoom"
         component={ChatRoomScreen}
-        options={{
+        options={({ route }) => ({
           headerBackTitleVisible: false,
           headerStyle: styles.header,
-          headerTitle: ChatRoomHeader,
-        }}
+          headerTitle: (props) => (
+            <ChatRoomHeader {...props} id={route.params?.id} />
+          ),
+        })}
       />
       <Stack.Screen
         name="UsersScreen"
@@ -84,120 +81,22 @@ function RootNavigator() {
           },
         }}
       />
+      <Stack.Screen
+        name="UserProfileScreen"
+        component={UserProfileScreen}
+        options={{
+          headerTitleAlign: "center",
+          title: "Profile",
+          headerTintColor: "#222",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 15,
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }
-
-const HomeHeader = (props) => {
-  const navigation = useNavigation();
-
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <Image
-        style={{
-          width: 30,
-          height: 30,
-          borderRadius: 15,
-        }}
-        source={{ uri: "https://thispersondoesnotexist.com/image" }}
-      />
-      <Text
-        style={{
-          flex: 1,
-          textAlign: "center",
-          marginLeft: 40,
-          fontWeight: "bold",
-          fontSize: 15,
-        }}
-      >
-        Sigma
-      </Text>
-
-      <View style={{ flexDirection: "row" }}>
-        <Feather
-          name="camera"
-          size={24}
-          color="#222"
-          style={{ marginHorizontal: 5 }}
-        />
-        <Pressable onPress={() => navigation.navigate("UsersScreen")}>
-          <Feather
-            name="edit-2"
-            size={24}
-            color="#222"
-            style={{ marginHorizontal: 10 }}
-          />
-        </Pressable>
-      </View>
-    </View>
-  );
-};
-
-const ChatRoomHeader = (props) => {
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginLeft: -25,
-      }}
-    >
-      <Image
-        style={{
-          width: 32,
-          height: 32,
-          borderRadius: 16,
-        }}
-        source={{ uri: "https://thispersondoesnotexist.com/image" }}
-      />
-      <Text
-        style={{
-          fontSize: 17,
-          color: "#fafafa",
-          flex: 1,
-          marginLeft: 10,
-          opacity: 0.7,
-          fontWeight: "bold",
-        }}
-      >
-        {props.children}
-      </Text>
-
-      <View
-        style={{
-          flexDirection: "row",
-          backgroundColor: "#2c6bed",
-        }}
-      >
-        <FontAwesome
-          name="video-camera"
-          size={24}
-          color="#fafafa"
-          style={{ marginHorizontal: 10, opacity: 0.7 }}
-        />
-        <Ionicons
-          name="ios-call"
-          size={24}
-          color="#fafafa"
-          style={{ marginHorizontal: 10, opacity: 0.7 }}
-        />
-        <MaterialCommunityIcons
-          name="dots-vertical"
-          size={24}
-          color="#fafafa"
-          style={{ marginHorizontal: 10, opacity: 0.7 }}
-        />
-      </View>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   header: {

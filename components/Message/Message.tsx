@@ -7,8 +7,6 @@ import { User } from "../../src/models";
 const blue = "#3777f0";
 const grey = "lightgrey";
 
-const myID = "u1";
-
 const Message = ({ message }) => {
   const [user, setUser] = useState<User | undefined>();
   const [isMe, setIsMe] = useState<boolean>(false);

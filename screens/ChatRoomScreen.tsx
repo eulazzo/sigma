@@ -66,7 +66,6 @@ export default function ChatRoomScreen() {
     }
   };
 
-  navigation.setOptions({ title: "Elon Musk" });
 
   return (
     <SafeAreaView style={styles.page}>

@@ -7,7 +7,6 @@ import { Auth, DataStore } from "aws-amplify";
 import { ChatRoomUser } from "../../src/models";
 
 import DEFAULT_IMAGE from "../../assets/images/avatar.png";
-import { DataStoreClass } from "@aws-amplify/datastore";
 const avatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
 
 export default function ChatRoomItem({ chatRoom }) {
@@ -15,7 +14,7 @@ export default function ChatRoomItem({ chatRoom }) {
   const [user, setUser] = useState<User | null>(null); //the display user
   const [lastMessage, setLastMessage] = useState<Message | undefined>();
   const navigation = useNavigation();
-
+  console.log("value");
   useEffect(() => {
     const fetchUsers = async () => {
       const {
@@ -27,6 +26,8 @@ export default function ChatRoomItem({ chatRoom }) {
         .map((chatRoomUser) => chatRoomUser.user);
 
       // setUsers(fetchedUsers);
+
+      
 
       //To not show myself on the chat room
       setUser(fetchedUsers.find((user) => user.id !== authUserID) || null);

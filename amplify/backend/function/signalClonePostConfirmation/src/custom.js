@@ -36,8 +36,8 @@ exports.handler = async (event) => {
   //Save a new user to DynamoDb
   try {
     await dynamoDBClient.putItem(params).promise();
-    console.log("Success")
+    console.log("Success");
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
