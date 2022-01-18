@@ -67,26 +67,28 @@ const ChatRoomHeader = ({ id, children }) => {
         style={{
           flexDirection: "row",
           backgroundColor: "#2c6bed",
+          alignItems: "center",
+        
         }}
       >
         <FontAwesome
           name="video-camera"
           size={24}
           color="#fafafa"
-          style={{ marginHorizontal: 10, opacity: 0.7 }}
+          style={{ opacity: 0.7,marginRight:15 }}
         />
 
         <Ionicons
           name="ios-call"
           size={24}
           color="#fafafa"
-          style={{ marginHorizontal: 10, opacity: 0.7 }}
+          style={{ opacity: 0.7,marginRight:10 }}
         />
         <MaterialCommunityIcons
           name="dots-vertical"
           size={24}
           color="#fafafa"
-          style={{ marginHorizontal: 10, opacity: 0.7 }}
+          style={{ opacity: 0.7 }}
         />
       </View>
     </View>

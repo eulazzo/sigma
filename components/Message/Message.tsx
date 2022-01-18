@@ -9,10 +9,9 @@ const blue = "#3777f0";
 const grey = "lightgrey";
 
 const Message = ({ message }) => {
-  const { width } = useWindowDimensions();
-
   const [user, setUser] = useState<User | undefined>();
   const [isMe, setIsMe] = useState<boolean>(false);
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     DataStore.query(User, message.userID)

@@ -16,8 +16,8 @@
     "@react-native-async-storage/async-storage": "^1.15.15",
     "@react-native-community/cli": "^6.3.1",
     "@react-native-community/masked-view": "0.1.10",
-    "@react-native-community/netinfo": "^7.1.7",
-    "@react-native-picker/picker": "^2.2.1",
+    "@react-native-community/netinfo": "6.0.0",
+    "@react-native-picker/picker": "1.16.1",
     "@react-navigation/bottom-tabs": "5.11.2",
     "@react-navigation/native": "~5.8.10",
     "@react-navigation/stack": "~5.12.8",
@@ -25,6 +25,7 @@
     "aws-amplify-react-native": "^6.0.2",
     "expo": "~42.0.1",
     "expo-asset": "~8.3.2",
+    "expo-av": "~9.2.3",
     "expo-constants": "~11.0.1",
     "expo-font": "~9.2.1",
     "expo-image-picker": "~10.2.2",
@@ -32,7 +33,7 @@
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
     "expo-web-browser": "~9.2.0",
-    "metro-config": "^0.66.2",
+    "metro-config": "^0.59.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
@@ -41,8 +42,7 @@
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
-    "react-native-web": "~0.13.12",
-    "uuid": "^8.3.2"
+    "react-native-web": "~0.13.12"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
