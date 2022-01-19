@@ -7,7 +7,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
-  Text,
 } from "react-native";
 import EmojiSelector from "react-native-emoji-selector";
 
@@ -25,7 +24,7 @@ import {
 
 import { ChatRoom } from "../../src/models";
 import * as ImagePicker from "expo-image-picker";
-import { Audio, AVPlaybackStatus } from "expo-av";
+import { Audio } from "expo-av";
 import AudioPlayer from "../AudioPlayer";
 
 const MessageInput = ({ chatRoom }) => {
@@ -35,7 +34,6 @@ const MessageInput = ({ chatRoom }) => {
   const [progress, setProgress] = useState(0);
 
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
-
   const [soundURI, setSoundUri] = useState<string | null>(null);
 
   const updateLastMessage = async (newMessage) => {
@@ -128,9 +126,9 @@ const MessageInput = ({ chatRoom }) => {
     if (!image) return;
 
     const imageArray = image.split(".");
-    const imageType = imageArray[imageArray.length - 1];
+    const imageExtension = imageArray[imageArray.length - 1];
 
-    const fileName = `${Date.now()}.${imageType}`;
+    const fileName = `${Date.now()}.${imageExtension}`;
 
     const blob = await getBlob(image);
     const { key } = await Storage.put(fileName, blob, { progressCallback });
@@ -232,7 +230,7 @@ const MessageInput = ({ chatRoom }) => {
         audio: key,
         userID: user.attributes.sub,
         chatroomID: chatRoom.id,
-        // status: "SENT",
+        status: "SENT",
         // replyToMessageID: messageReplyTo?.id,
       })
     );

@@ -5,7 +5,7 @@ import styles from "./styles";
 import { Message, User } from "../../src/models";
 import { Auth, DataStore } from "aws-amplify";
 import { ChatRoomUser } from "../../src/models";
-
+import TimeAgo from "react-native-timeago";
 import DEFAULT_IMAGE from "../../assets/images/avatar.png";
 const avatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
 
@@ -14,7 +14,7 @@ export default function ChatRoomItem({ chatRoom }) {
   const [user, setUser] = useState<User | null>(null); //the display user
   const [lastMessage, setLastMessage] = useState<Message | undefined>();
   const navigation = useNavigation();
- 
+
   useEffect(() => {
     const fetchUsers = async () => {
       const {
@@ -64,7 +64,11 @@ export default function ChatRoomItem({ chatRoom }) {
           <View style={styles.rightContainer}>
             <View style={styles.row}>
               <Text style={styles.name}>{user?.name.split("@")[0]}</Text>
-              <Text style={styles.text}>11:21Am</Text>
+              {lastMessage?.createdAt && (
+                <Text style={styles.text}>
+                  <TimeAgo time={lastMessage.createdAt} />
+                </Text>
+              )}
             </View>
             <Text numberOfLines={1} style={styles.text}>
               {lastMessage?.content ||

@@ -3,18 +3,36 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
 
 import { User } from "../../src/models";
+import { Message as MessageModel } from "../../src/models";
 import { S3Image } from "aws-amplify-react-native";
 import AudioPlayer from "../AudioPlayer";
 import { Audio } from "expo-av";
+import { Ionicons } from "@expo/vector-icons";
 
 const blue = "#3777f0";
 const grey = "lightgrey";
 
-const Message = ({ message }) => {
+const Message = (props) => {
+  const [message, setMessage] = useState<MessageModel>(props.message);
   const [user, setUser] = useState<User | undefined>();
-  const [isMe, setIsMe] = useState<boolean>(false);
+  const [isMe, setIsMe] = useState<boolean | null>(null);
   const [soundURI, setSoundURI] = useState<any | null>(null);
   const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    const subscription = DataStore.observe(MessageModel, message.id).subscribe(
+      (msg) => {
+        if (msg.model === MessageModel && msg.opType === "UPDATE") {
+          setMessage((message) => ({ ...message, ...msg.element }));
+        }
+      }
+    );
+    return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    setAsRead();
+  }, [isMe, message]);
 
   useEffect(() => {
     DataStore.query(User, message.userID)
@@ -41,6 +59,16 @@ const Message = ({ message }) => {
     checkIfItsMe();
   }, [user]);
 
+  const setAsRead = async () => {
+    if (isMe === false && message.status !== "READ") {
+      await DataStore.save(
+        MessageModel.copyOf(message, (updated) => {
+          updated.status = "READ";
+        })
+      );
+    }
+  };
+
   return (
     <View
       style={[
@@ -53,18 +81,35 @@ const Message = ({ message }) => {
         <View style={{ marginBottom: message.content ? 10 : 0 }}>
           <S3Image
             imgKey={message.image}
-            style={{ width: width * 0.7, aspectRatio: 4 / 3 }}
+            style={{ width: width * 0.65, aspectRatio: 4 / 3 }}
             resizeMode="contain"
           />
         </View>
       )}
 
-      {message.audio && <AudioPlayer soundURI={soundURI} />}
+      {message.audio && (
+        <View style={{ flex: 1 }}>
+          <AudioPlayer soundURI={soundURI} />
+        </View>
+      )}
 
       {!!message.content && (
         <Text style={{ color: isMe ? "black" : "white" }}>
           {message.content}
         </Text>
+      )}
+
+      {isMe && !!message.status && message.status !== "SENT" && (
+        <Ionicons
+          style={{ marginHorizontal: 2 }}
+          name={
+            message.status === "DELIVERED"
+              ? "md-checkmark"
+              : "md-checkmark-done"
+          }
+          size={20}
+          color="#000"
+        />
       )}
     </View>
   );
@@ -75,7 +120,9 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 10,
+    flexDirection: "row",
     maxWidth: "75%",
+    alignItems: "flex-end",
   },
   leftContainer: {
     backgroundColor: blue,

@@ -20,7 +20,19 @@ const authAvatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
 export const UserProfileScreen = () => {
   const [user, setUser] = useState<User | null>(null); //the display user
   const [name, setName] = useState("");
+  // const [name, setName] = useState(user.name);
   const [image, setImage] = useState(null);
+
+ 
+  // useEffect(() => {
+  //   const subscription = DataStore.observe(User,user.id).subscribe((msg) => {
+  //     if (msg.model === MessageModel && msg.opType === "UPDATE") {
+  //       setUser((existingMessages) => [msg.element, ...existingMessages]);
+  //     }
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, []);
+
 
   const logout = () => Auth.signOut();
   useEffect(() => {
@@ -118,8 +130,18 @@ export const UserProfileScreen = () => {
       })
     );
   };
-
   
+  const verify = () => {
+    if (!user?.name) return;
+    if (user.name.includes("@")) {
+      return user.name.split("@")[0];
+    } else {
+      return user.name;
+    }
+  };
+   
+ 
+
   return (
     <View>
       <View style={styles.wrapper}>
@@ -136,7 +158,7 @@ export const UserProfileScreen = () => {
             color="#000"
           />
         </View>
-        <Text style={styles.text}>{user?.name.split("@")[0]}</Text>
+        <Text style={styles.text}>{verify()}</Text>
       </View>
 
       <View style={styles.inputContainer}>

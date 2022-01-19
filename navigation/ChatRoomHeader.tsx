@@ -33,6 +33,15 @@ const ChatRoomHeader = ({ id, children }) => {
     fetchUsers();
   }, []);
 
+  const verify = () => {
+    if (!user?.name) return;
+    if (user.name.includes("@")) {
+      return user.name.split("@")[0];
+    } else {
+      return user.name;
+    }
+  };
+
   return (
     <View
       style={{
@@ -60,7 +69,7 @@ const ChatRoomHeader = ({ id, children }) => {
           fontWeight: "bold",
         }}
       >
-        {user?.name}
+        {verify()}
       </Text>
 
       <View
@@ -68,21 +77,20 @@ const ChatRoomHeader = ({ id, children }) => {
           flexDirection: "row",
           backgroundColor: "#2c6bed",
           alignItems: "center",
-        
         }}
       >
         <FontAwesome
           name="video-camera"
           size={24}
           color="#fafafa"
-          style={{ opacity: 0.7,marginRight:15 }}
+          style={{ opacity: 0.7, marginRight: 15 }}
         />
 
         <Ionicons
           name="ios-call"
           size={24}
           color="#fafafa"
-          style={{ opacity: 0.7,marginRight:10 }}
+          style={{ opacity: 0.7, marginRight: 10 }}
         />
         <MaterialCommunityIcons
           name="dots-vertical"

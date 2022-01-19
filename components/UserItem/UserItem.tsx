@@ -47,12 +47,21 @@ const UserItem = ({ user }) => {
     navigation.navigate("ChatRoom", { id: newChatRoom.id });
   };
 
+  const verify = () => {
+    if (!user.name) return;
+    if (user?.name.includes("@")) {
+      return user?.name.split("@")[0];
+    } else {
+      return user?.name;
+    }
+  };
+
   return (
     <Pressable onPress={onPress} style={styles.container}>
       <Image style={styles.image} source={{ uri: user.imageUri || avatar }} />
       <View style={styles.rightContainer}>
         <View style={styles.row}>
-          <Text style={styles.name}>{user.name.split("@")[0]}</Text>
+          <Text style={styles.name}>{verify()}</Text>
         </View>
       </View>
     </Pressable>
