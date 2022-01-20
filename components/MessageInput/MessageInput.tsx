@@ -7,11 +7,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
+  Text,
 } from "react-native";
 import EmojiSelector from "react-native-emoji-selector";
 
-import { Message } from "../../src/models/";
+import { Message, User } from "../../src/models/";
 import { Auth, DataStore, Storage } from "aws-amplify";
+import MessageComponent from "../Message/Message";
 
 import {
   SimpleLineIcons,
@@ -20,6 +22,7 @@ import {
   AntDesign,
   Ionicons,
   EvilIcons,
+  Entypo,
 } from "@expo/vector-icons";
 
 import { ChatRoom } from "../../src/models";
@@ -27,12 +30,11 @@ import * as ImagePicker from "expo-image-picker";
 import { Audio } from "expo-av";
 import AudioPlayer from "../AudioPlayer";
 
-const MessageInput = ({ chatRoom }) => {
+const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
   const [message, setMessage] = useState("");
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
-
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [soundURI, setSoundUri] = useState<string | null>(null);
 
@@ -99,6 +101,7 @@ const MessageInput = ({ chatRoom }) => {
     setImage(null);
     setProgress(0);
     setSoundUri(null);
+    removeMessageReplyTo(null);
   };
 
   const sendMessage = async () => {
@@ -112,6 +115,7 @@ const MessageInput = ({ chatRoom }) => {
         content: message,
         userID: userAuthId,
         chatroomID: chatRoom.id,
+        replyToMessageID: messageReplyTo?.id,
       })
     );
     updateLastMessage(newMessage);
@@ -127,9 +131,7 @@ const MessageInput = ({ chatRoom }) => {
 
     const imageArray = image.split(".");
     const imageExtension = imageArray[imageArray.length - 1];
-
     const fileName = `${Date.now()}.${imageExtension}`;
-
     const blob = await getBlob(image);
     const { key } = await Storage.put(fileName, blob, { progressCallback });
 
@@ -144,6 +146,7 @@ const MessageInput = ({ chatRoom }) => {
         image: key,
         userID: userAuthId,
         chatroomID: chatRoom.id,
+        replyToMessageID: messageReplyTo?.id,
       })
     );
     updateLastMessage(newMessage);
@@ -231,7 +234,7 @@ const MessageInput = ({ chatRoom }) => {
         userID: user.attributes.sub,
         chatroomID: chatRoom.id,
         status: "SENT",
-        // replyToMessageID: messageReplyTo?.id,
+        replyToMessageID: messageReplyTo?.id,
       })
     );
   };
@@ -242,6 +245,29 @@ const MessageInput = ({ chatRoom }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={100}
     >
+      {messageReplyTo && (
+        <View
+          style={{ backgroundColor: "#f2f2f2", padding: 5, borderRadius: 10 }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Entypo name="reply" size={24} color="#222" />
+            <Text
+              style={{ marginLeft: 5, color: "#000", flex: 1, opacity: 0.7 }}
+            >
+              Reply to
+            </Text>
+            <EvilIcons
+              onPress={removeMessageReplyTo}
+              name="close"
+              size={30}
+              color="#000"
+              style={{ margin: 5 }}
+            />
+          </View>
+
+          <MessageComponent message={messageReplyTo} />
+        </View>
+      )}
       {image && (
         <View style={styles.sendImageContainer}>
           <Image
