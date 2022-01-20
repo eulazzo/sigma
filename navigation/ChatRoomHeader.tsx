@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { ChatRoomUser } from "../src/models";
 import { User } from "../src/models";
+import moment from "moment";
 
 const ChatRoomHeader = ({ id, children }) => {
   const [user, setUser] = useState<User | null>(null); //the display user
@@ -42,6 +43,18 @@ const ChatRoomHeader = ({ id, children }) => {
     }
   };
 
+  const getLastOnlineText = () => {
+    if (!user?.lastOnlineAt) return null;
+    //if lastOnlineAt is less than 5 minutes ago, show him as online
+    const lastOnlineDiffMiliSeconds = moment().diff(moment(user.lastOnlineAt));
+    if (lastOnlineDiffMiliSeconds < 5 * 60 * 1000) {
+      //less than 5 min
+      return "Online";
+    } else {
+      return `Seen online ${moment(user.lastOnlineAt).fromNow()}`;
+    }
+  };
+
   return (
     <View
       style={{
@@ -59,18 +72,25 @@ const ChatRoomHeader = ({ id, children }) => {
         }}
         source={{ uri: user?.imageUri ? user?.imageUri : avatar }}
       />
-      <Text
-        style={{
-          fontSize: 17,
-          color: "#fafafa",
-          flex: 1,
-          marginLeft: 10,
-          opacity: 0.7,
-          fontWeight: "bold",
-        }}
-      >
-        {verify()}
-      </Text>
+      <View style={{ flex: 1, marginLeft: 10 }}>
+        <Text
+          style={{
+            fontSize: 15,
+            color: "#fafafa",
+            opacity: 0.7,
+            fontWeight: "bold",
+          }}
+        >
+          {verify()}
+        </Text>
+        <Text
+          maxFontSizeMultiplier={1}
+          // numberOfLines={1}
+          style={{ color: "#fafafa", fontSize: 11, opacity: 0.7 }}
+        >
+          {getLastOnlineText()}
+        </Text>
+      </View>
 
       <View
         style={{

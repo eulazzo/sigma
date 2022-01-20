@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import UserItem from "../components/UserItem";
 
-import { DataStore } from "aws-amplify";
+import { Auth, DataStore } from "aws-amplify";
 import { User } from "../src/models";
 
 export default function UsersScreen() {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    DataStore.query(User).then(setUsers);
+    (async () => {
+      const {
+        attributes: { sub: userAuthID },
+      } = await Auth.currentAuthenticatedUser();
+
+      DataStore.query(User).then(setUsers)
+    })();
   }, []);
 
   return (
