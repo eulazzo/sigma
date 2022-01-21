@@ -13,7 +13,7 @@ import { Message as MessageModel } from "../../src/models";
 import { S3Image } from "aws-amplify-react-native";
 import AudioPlayer from "../AudioPlayer";
 import { Audio } from "expo-av";
-import { Ionicons } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import MessageReply from "../MessageReply";
 
 const blue = "#3777f0";
@@ -46,7 +46,6 @@ const Message = (props) => {
         .then(setRepliedTo)
         .catch((err) => console.log(err));
     }
-    console.log("respondidas", repliedTo);
   }, [propMessage]);
 
   useEffect(() => {
@@ -105,7 +104,13 @@ const Message = (props) => {
     >
       {repliedTo && (
         // <Text style={styles.messageReply}>In reply to:{repliedTo.content}</Text>
-        <MessageReply message={repliedTo}/>
+        <View>
+          <View style={{flexDirection:"row",alignItems:"center"}}>
+            <Entypo name="reply" size={18} color="#3777f0" style={{opacity:0.8}} />
+            <Text style={{marginLeft:5}}>In reply to :</Text>
+          </View>
+          <MessageReply message={repliedTo} />
+        </View>
       )}
       <View style={styles.row}>
         {message.image && (
@@ -159,12 +164,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   messageReply: {
-    backgroundColor:"#f1f1f1",
+    backgroundColor: "#f1f1f1",
     padding: 5,
-    borderRadius:5,
-    borderColor:"#3777f0",
-    borderLeftWidth:3
-
+    borderRadius: 5,
+    borderColor: "#3777f0",
+    borderLeftWidth: 3,
   },
   leftContainer: {
     backgroundColor: "#3777f0",
@@ -176,7 +180,6 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: 10,
     alignItems: "flex-end",
-
   },
 });
 

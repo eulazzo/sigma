@@ -10,36 +10,44 @@ const avatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
 
 import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
-import { ChatRoomUser } from "../src/models";
+import { ChatRoom, ChatRoomUser } from "../src/models";
 import { User } from "../src/models";
 import moment from "moment";
 
 const ChatRoomHeader = ({ id, children }) => {
   const [user, setUser] = useState<User | null>(null); //the display user
+  const [allUsersInGroup, setAllUsersInGroup] = useState<User[]>([]);
+  const [chatRoom, setChatRoom] = useState<ChatRoom | undefined>(undefined);
+
+  const fetchUsers = async () => {
+    const {
+      attributes: { sub: authUserID },
+    } = await Auth.currentAuthenticatedUser();
+
+    const fetchedUsers = (await DataStore.query(ChatRoomUser))
+      .filter((chatRoomUser) => chatRoomUser.chatRoom.id === id)
+      .map((chatRoomUser) => chatRoomUser.user);
+
+    setAllUsersInGroup(fetchedUsers);
+    setUser(fetchedUsers.find((user) => user.id !== authUserID) || null);
+  };
+
+  const fetchChatRoom = async () => {
+    DataStore.query(ChatRoom, id).then(setChatRoom);
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      if (!id) return;
-      const {
-        attributes: { sub: authUserID },
-      } = await Auth.currentAuthenticatedUser();
-
-      const fetchedUsers = (await DataStore.query(ChatRoomUser))
-        .filter((chatRoomUser) => chatRoomUser.chatRoom.id === id)
-        .map((chatRoomUser) => chatRoomUser.user)
-        .find((user) => user.id !== authUserID);
-
-      setUser(fetchedUsers || null);
-    };
+    if (!id) return;
     fetchUsers();
+    fetchChatRoom();
   }, []);
 
-  const verify = () => {
-    if (!user?.name) return;
-    if (user.name.includes("@")) {
-      return user.name.split("@")[0];
+  const verifySpecialCaracteres = (name) => {
+    if (!name) return;
+    if (name.includes("@")) {
+      return name.split("@")[0];
     } else {
-      return user.name;
+      return name;
     }
   };
 
@@ -53,6 +61,14 @@ const ChatRoomHeader = ({ id, children }) => {
     } else {
       return `Seen online ${moment(user.lastOnlineAt).fromNow()}`;
     }
+  };
+
+  const isGroup = allUsersInGroup.length > 2;
+
+  const getUsersName = () => {
+    return allUsersInGroup
+      .map((user) => verifySpecialCaracteres(user.name))
+      .join(", ");
   };
 
   return (
@@ -70,7 +86,13 @@ const ChatRoomHeader = ({ id, children }) => {
           height: 32,
           borderRadius: 16,
         }}
-        source={{ uri: user?.imageUri ? user?.imageUri : avatar }}
+        source={{
+          uri: chatRoom?.imageUri
+            ? chatRoom?.imageUri
+            : user?.imageUri
+            ? user?.imageUri
+            : avatar,
+        }}
       />
       <View style={{ flex: 1, marginLeft: 10 }}>
         <Text
@@ -81,14 +103,14 @@ const ChatRoomHeader = ({ id, children }) => {
             fontWeight: "bold",
           }}
         >
-          {verify()}
+          {chatRoom?.name || user?.name}
         </Text>
         <Text
           maxFontSizeMultiplier={1}
-          // numberOfLines={1}
+          numberOfLines={1}
           style={{ color: "#fafafa", fontSize: 11, opacity: 0.7 }}
         >
-          {getLastOnlineText()}
+          {isGroup ? getUsersName() : getLastOnlineText()}
         </Text>
       </View>
 

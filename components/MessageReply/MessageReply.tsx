@@ -26,10 +26,6 @@ const MessageReply = (props) => {
   const [soundURI, setSoundURI] = useState<any | null>(null);
   const { width } = useWindowDimensions();
 
-   
-
-
-
   //this is for reply message to works properly.
   //(make possible cancel a reply to reply another message)
   useEffect(() => {
@@ -61,8 +57,6 @@ const MessageReply = (props) => {
     checkIfItsMe();
   }, [user]);
 
-   
-
   return (
     <View
       style={[
@@ -71,13 +65,17 @@ const MessageReply = (props) => {
         { width: soundURI ? "75%" : "auto" },
       ]}
     >
-      
       <View style={styles.row}>
         {message.image && (
-          <View style={{ marginBottom: message.content ? 10 : 0 }}>
+          <View
+            style={{
+              marginBottom: message.content ? 10 : 0,
+              justifyContent: "center",
+            }}
+          >
             <S3Image
               imgKey={message.image}
-              style={{ width: width * 0.65, aspectRatio: 4 / 3 }}
+              style={{ width: width * 0.45, aspectRatio: 4 / 3 }}
               resizeMode="contain"
             />
           </View>
@@ -93,19 +91,6 @@ const MessageReply = (props) => {
           <Text style={{ color: isMe ? "black" : "white" }}>
             {message.content}
           </Text>
-        )}
-
-        {isMe && !!message.status && message.status !== "SENT" && (
-          <Ionicons
-            style={{ marginHorizontal: 2 }}
-            name={
-              message.status === "DELIVERED"
-                ? "md-checkmark"
-                : "md-checkmark-done"
-            }
-            size={20}
-            color="#000"
-          />
         )}
       </View>
     </View>
@@ -124,12 +109,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   messageReply: {
-    backgroundColor:"#f1f1f1",
+    backgroundColor: "#f1f1f1",
     padding: 5,
-    borderRadius:5,
-    borderColor:"#3777f0",
-    borderLeftWidth:3
-
+    borderRadius: 5,
+    borderColor: "#3777f0",
+    borderLeftWidth: 3,
   },
   leftContainer: {
     backgroundColor: "#3777f0",
@@ -141,7 +125,6 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: 10,
     alignItems: "flex-end",
-
   },
 });
 

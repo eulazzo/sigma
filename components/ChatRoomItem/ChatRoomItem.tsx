@@ -10,7 +10,7 @@ import DEFAULT_IMAGE from "../../assets/images/avatar.png";
 const avatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
 
 export default function ChatRoomItem({ chatRoom }) {
-  // const [users, setUsers] = useState<User[]>([]); //all user in this chatRoom
+  const [allUsersInGroup, setAllUsersInGroup] = useState<User[]>([]); //all user in this chatRoom
   const [user, setUser] = useState<User | null>(null); //the display user
   const [lastMessage, setLastMessage] = useState<Message | undefined>();
   const navigation = useNavigation();
@@ -25,7 +25,7 @@ export default function ChatRoomItem({ chatRoom }) {
         .filter((chatRoomUser) => chatRoomUser.chatRoom.id === chatRoom.id)
         .map((chatRoomUser) => chatRoomUser.user);
 
-      // setUsers(fetchedUsers)
+      setAllUsersInGroup(fetchedUsers);
 
       //To not show myself on the chat room
       setUser(fetchedUsers.find((user) => user.id !== authUserID) || null);
@@ -46,12 +46,30 @@ export default function ChatRoomItem({ chatRoom }) {
     navigation.navigate("ChatRoom", { id: chatRoom.id });
   };
 
+  const isGroup = allUsersInGroup.length > 2;
+
+
+  const verifySpecialCaracteres = (name) => {
+    if (!name) return;
+    if (name.includes("@")) {
+      return name.split("@")[0];
+    } else {
+      return name;
+    }
+  };
+
   return (
     <Pressable onPress={onPress} style={styles.container}>
       {user && (
         <>
           <Image
-            source={{ uri: user?.imageUri || avatar }}
+            source={{
+              uri: chatRoom?.imageUri
+                ? chatRoom?.imageUri
+                : user?.imageUri
+                ? user?.imageUri
+                : avatar,
+            }}
             style={styles.image}
           />
 
@@ -63,7 +81,9 @@ export default function ChatRoomItem({ chatRoom }) {
 
           <View style={styles.rightContainer}>
             <View style={styles.row}>
-              <Text style={styles.name}>{user?.name.split("@")[0]}</Text>
+              <Text style={styles.name}>
+                {isGroup ? chatRoom.name : verifySpecialCaracteres(user?.name)}
+              </Text>
               {lastMessage?.createdAt && (
                 <Text style={styles.text}>
                   <TimeAgo time={lastMessage.createdAt} />
@@ -72,7 +92,9 @@ export default function ChatRoomItem({ chatRoom }) {
             </View>
             <Text numberOfLines={1} style={styles.text}>
               {lastMessage?.content ||
-                `Start A Conversation With ${user?.name}`}
+                `Start a conversation ${isGroup ? "on" : "with"} ${
+                  isGroup ? chatRoom.name : user?.name
+                }`}
             </Text>
           </View>
         </>

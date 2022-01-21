@@ -4,48 +4,11 @@ import { View, Text, Image, Pressable, Alert } from "react-native";
 import styles from "./style";
 
 import DEFAULT_IMAGE from "../../assets/images/noAvatar.png";
+import { Feather } from "@expo/vector-icons";
 const avatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
-import { Auth, DataStore } from "aws-amplify";
-import { ChatRoom, ChatRoomUser, User } from "../../src/models";
 
-const UserItem = ({ user }) => {
-  const navigation = useNavigation();
-
-  const onPress = async () => {
-    //TO_DO if there is already a chatroom between these two users
-    //then redirect to the existing chatroom.
-    //Otherwise, create a new chatroom with these users.
-    //This can be done filtering the ChatRoom with the usersId
-
-    //create a chat room
-    const newChatRoom = await DataStore.save(new ChatRoom({ newMessges: 0 }));
-
-    //getting the authenticated user and his dataBase.
-    const authUser = await Auth.currentAuthenticatedUser();
-    const dbUser = await DataStore.query(User, authUser.attributes.sub);
-
-    if (!dbUser || dbUser.length > 1) {
-      Alert.alert("Chat room was not possible to create");
-      return;
-    }
-
-    // connect authenticated user with the chatRoom
-    await DataStore.save(
-      new ChatRoomUser({
-        user: dbUser,
-        chatRoom: newChatRoom,
-      })
-    );
-
-    // connect clicked  user with the chatRoom
-    await DataStore.save(
-      new ChatRoomUser({
-        user,
-        chatRoom: newChatRoom,
-      })
-    );
-    navigation.navigate("ChatRoom", { id: newChatRoom.id });
-  };
+const UserItem = ({ user, onPress, isSelected }) => {
+  console.log("oi", isSelected);
 
   const verify = () => {
     if (!user.name) return;
@@ -64,6 +27,13 @@ const UserItem = ({ user }) => {
           <Text style={styles.name}>{verify()}</Text>
         </View>
       </View>
+      {isSelected !== undefined && (
+        <Feather
+          name={isSelected ? "check-circle" : "circle"}
+          size={23}
+          color={"#4f4f4f"}
+        />
+      )}
     </Pressable>
   );
 };
