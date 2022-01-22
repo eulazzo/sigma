@@ -23,18 +23,19 @@ export const UserProfileScreen = () => {
   // const [name, setName] = useState(user.name);
   const [image, setImage] = useState(null);
 
- 
   // useEffect(() => {
-  //   const subscription = DataStore.observe(User,user.id).subscribe((msg) => {
-  //     if (msg.model === MessageModel && msg.opType === "UPDATE") {
+  //   const subscription = DataStore.observe(User, user.id).subscribe((msg) => {
+  //     if (msg.model === User && msg.opType === "UPDATE") {
   //       setUser((existingMessages) => [msg.element, ...existingMessages]);
   //     }
   //   });
   //   return () => subscription.unsubscribe();
   // }, []);
 
-
-  const logout = () => Auth.signOut();
+  const logout = async () => {
+    await DataStore.clear();
+    await Auth.signOut();
+  };
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -130,7 +131,7 @@ export const UserProfileScreen = () => {
       })
     );
   };
-  
+
   const verify = () => {
     if (!user?.name) return;
     if (user.name.includes("@")) {
@@ -139,8 +140,6 @@ export const UserProfileScreen = () => {
       return user.name;
     }
   };
-   
- 
 
   return (
     <View>

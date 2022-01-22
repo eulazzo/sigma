@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Text,
   View,
+  TextInput,
 } from "react-native";
 import UserItem from "../components/UserItem";
 import { Auth, DataStore } from "aws-amplify";
@@ -20,6 +21,9 @@ export default function UsersScreen() {
   const navigation = useNavigation();
   const [isNewGroup, setIsNewGroup] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const [groupName, setGroupName] = useState("");
+
+ 
 
   useEffect(() => {
     DataStore.query(User).then(setUsers);
@@ -43,7 +47,7 @@ export default function UsersScreen() {
     //getting the authenticated user and his dataBase.
     const authUser = await Auth.currentAuthenticatedUser();
     const dbUser = await DataStore.query(User, authUser.attributes.sub);
-    
+
     if (!dbUser || dbUser.length > 1) {
       Alert.alert("Chat room was not possible to create");
       return;
@@ -52,14 +56,12 @@ export default function UsersScreen() {
     const newChatRoomData = { newMessges: 0, Admin: dbUser };
 
     if (users.length > 1) {
-      console.log("mais de um user")
+      console.log("mais de um user");
       newChatRoomData.name = "New group";
       newChatRoomData.imageUri =
         "https://cdn.pixabay.com/photo/2016/11/14/17/39/group-1824145_1280.png";
     }
     const newChatRoom = await DataStore.save(new ChatRoom(newChatRoomData));
-
-     
 
     // connect authenticated user with the chatRoom
     await addUserToChatRoom(dbUser, newChatRoom);
@@ -113,6 +115,7 @@ export default function UsersScreen() {
           <NewGroupButton onPress={() => setIsNewGroup(!isNewGroup)} />
         )}
       />
+
       {isNewGroup && (
         <Pressable style={styles.button} onPress={saveGroup}>
           <Text style={styles.buttonText}>
@@ -153,5 +156,23 @@ const styles = StyleSheet.create({
   logoutText: {
     color: "#fafafa",
     fontSize: 16,
+  },
+  textInput: {
+    paddingVertical: 5,
+    fontSize: 16,
+    flex: 1,
+    textAlign: "center",
+  },
+  buttonTextSaveName: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#fafafa",
+    width: 70,
+    borderRadius: 10,
+  },
+  buttonSaveName: {
+    backgroundColor: "#3777f0",
+    padding: 10,
+    borderRadius: 10,
   },
 });

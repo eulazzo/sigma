@@ -7,9 +7,13 @@ import DEFAULT_IMAGE from "../../assets/images/noAvatar.png";
 import { Feather } from "@expo/vector-icons";
 const avatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
 
-const UserItem = ({ user, onPress, isSelected }) => {
-  console.log("oi", isSelected);
-
+const UserItem = ({
+  user,
+  onPress,
+  isSelected,
+  isAdmin = false,
+  onLongPress,
+}) => {
   const verify = () => {
     if (!user.name) return;
     if (user?.name.includes("@")) {
@@ -20,12 +24,15 @@ const UserItem = ({ user, onPress, isSelected }) => {
   };
 
   return (
-    <Pressable onPress={onPress} style={styles.container}>
+    <Pressable
+      onPress={onPress}
+      style={styles.container}
+      onLongPress={onLongPress}
+    >
       <Image style={styles.image} source={{ uri: user.imageUri || avatar }} />
       <View style={styles.rightContainer}>
-        <View style={styles.row}>
-          <Text style={styles.name}>{verify()}</Text>
-        </View>
+        <Text style={styles.name}>{verify()}</Text>
+        {isAdmin && <Text>Admin</Text>}
       </View>
       {isSelected !== undefined && (
         <Feather

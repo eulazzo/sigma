@@ -9,15 +9,18 @@ import DEFAULT_IMAGE from "../assets/images/avatar.png";
 const avatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
 
 import React, { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { ChatRoom, ChatRoomUser } from "../src/models";
 import { User } from "../src/models";
 import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
 
 const ChatRoomHeader = ({ id, children }) => {
+
   const [user, setUser] = useState<User | null>(null); //the display user
   const [allUsersInGroup, setAllUsersInGroup] = useState<User[]>([]);
   const [chatRoom, setChatRoom] = useState<ChatRoom | undefined>(undefined);
+  const navigation = useNavigation();
 
   const fetchUsers = async () => {
     const {
@@ -53,6 +56,7 @@ const ChatRoomHeader = ({ id, children }) => {
 
   const getLastOnlineText = () => {
     if (!user?.lastOnlineAt) return null;
+    console.log("passei aki")
     //if lastOnlineAt is less than 5 minutes ago, show him as online
     const lastOnlineDiffMiliSeconds = moment().diff(moment(user.lastOnlineAt));
     if (lastOnlineDiffMiliSeconds < 5 * 60 * 1000) {
@@ -69,6 +73,11 @@ const ChatRoomHeader = ({ id, children }) => {
     return allUsersInGroup
       .map((user) => verifySpecialCaracteres(user.name))
       .join(", ");
+  };
+
+  const openInfo = () => {
+    //redirect to groupInfo
+    navigation.navigate("GroupInfo",{id});
   };
 
   return (
@@ -94,7 +103,7 @@ const ChatRoomHeader = ({ id, children }) => {
             : avatar,
         }}
       />
-      <View style={{ flex: 1, marginLeft: 10 }}>
+      <Pressable onPress={openInfo} style={{ flex: 1, marginLeft: 10 }}>
         <Text
           style={{
             fontSize: 15,
@@ -112,7 +121,7 @@ const ChatRoomHeader = ({ id, children }) => {
         >
           {isGroup ? getUsersName() : getLastOnlineText()}
         </Text>
-      </View>
+      </Pressable>
 
       <View
         style={{

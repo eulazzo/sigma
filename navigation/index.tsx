@@ -30,6 +30,7 @@ import UsersScreen from "../screens/UsersScren";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import ChatRoomHeader from "./ChatRoomHeader";
 import HomeHeader from "./HomeHeader";
+import GroupInfoScreen from "../screens/GroupInfoScreen";
 export default function Navigation({
   colorScheme,
 }: {
@@ -67,6 +68,20 @@ function RootNavigator() {
             <ChatRoomHeader {...props} id={route.params?.id} />
           ),
         })}
+      />
+
+      <Stack.Screen
+        name="GroupInfo"
+        component={GroupInfoScreen}
+        options={{
+          headerTitleAlign: "center",
+          title: "Group Info",
+          headerTintColor: "#222",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 15,
+          },
+        }}
       />
       <Stack.Screen
         name="UsersScreen"

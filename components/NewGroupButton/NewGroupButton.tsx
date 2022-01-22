@@ -1,8 +1,13 @@
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
 
 const NewGroupButton = ({ onPress }) => {
+ 
   return (
     <Pressable onPress={onPress}>
       <View
@@ -20,6 +25,6 @@ const NewGroupButton = ({ onPress }) => {
   );
 };
 
-const styles = StyleSheet.create({});
+ 
 
 export default NewGroupButton;
