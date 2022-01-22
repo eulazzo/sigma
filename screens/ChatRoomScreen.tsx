@@ -68,6 +68,8 @@ export default function ChatRoomScreen() {
     }
   };
 
+   
+
   return (
     <SafeAreaView style={styles.page}>
       <FlatList

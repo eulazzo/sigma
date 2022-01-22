@@ -6,15 +6,16 @@ import {
   StyleSheet,
   useWindowDimensions,
   Pressable,
+  Alert,
 } from "react-native";
 
 import { User } from "../../src/models";
 import { Message as MessageModel } from "../../src/models";
 import { S3Image } from "aws-amplify-react-native";
 import AudioPlayer from "../AudioPlayer";
-import { Audio } from "expo-av";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import MessageReply from "../MessageReply";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 
 const blue = "#3777f0";
 const grey = "lightgrey";
@@ -27,12 +28,18 @@ const Message = (props) => {
   const [isMe, setIsMe] = useState<boolean | null>(null);
   const [soundURI, setSoundURI] = useState<any | null>(null);
   const { width } = useWindowDimensions();
+  const [isDeleted, setIsDeleted] = useState(false);
+  const { showActionSheetWithOptions } = useActionSheet();
 
   useEffect(() => {
     const subscription = DataStore.observe(MessageModel, message.id).subscribe(
       (msg) => {
-        if (msg.model === MessageModel && msg.opType === "UPDATE") {
-          setMessage((message) => ({ ...message, ...msg.element }));
+        if (msg.model === MessageModel) {
+          if (msg.opType === "UPDATE") {
+            setMessage((message) => ({ ...message, ...msg.element }));
+          } else if (msg.opType === "DELETE") {
+            setIsDeleted(true);
+          }
         }
       }
     );
@@ -93,9 +100,59 @@ const Message = (props) => {
     }
   };
 
+  const deleteMessage = async () => {
+    await DataStore.delete(message);
+  };
+
+  const confirmDelete = () => {
+    Alert.alert(
+      "Confirm delete",
+      "Are you sure you want to delete this message?",
+      [
+        {
+          text: "Delete",
+          onPress: deleteMessage,
+          style: "destructive",
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ]
+    );
+  };
+
+  const onActionPress = (index) => {
+    if (index === 0) {
+      setAsMessageReply();
+    } else if (index == 1) {
+      if (isMe) {
+        confirmDelete();
+      } else {
+        Alert.alert("Can't perform action", "This is not your message");
+      }
+    }
+  };
+
+  const openActionMenu = () => {
+    const options = ["Reply", "Delete", "Cancel"];
+
+    const destructiveButtonIndex = 1;
+    const cancelButtonIndex = 2;
+
+    showActionSheetWithOptions(
+      {
+        options,
+        destructiveButtonIndex,
+        cancelButtonIndex,
+      },
+      onActionPress
+    );
+  };
+
   return (
     <Pressable
-      onLongPress={setAsMessageReply}
+      onLongPress={openActionMenu}
       style={[
         styles.container,
         isMe ? styles.rightContainer : styles.leftContainer,
@@ -105,9 +162,14 @@ const Message = (props) => {
       {repliedTo && (
         // <Text style={styles.messageReply}>In reply to:{repliedTo.content}</Text>
         <View>
-          <View style={{flexDirection:"row",alignItems:"center"}}>
-            <Entypo name="reply" size={18} color="#3777f0" style={{opacity:0.8}} />
-            <Text style={{marginLeft:5}}>In reply to :</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Entypo
+              name="reply"
+              size={18}
+              color="#3777f0"
+              style={{ opacity: 0.8 }}
+            />
+            <Text style={{ marginLeft: 5 }}>In reply to :</Text>
           </View>
           <MessageReply message={repliedTo} />
         </View>
@@ -131,7 +193,13 @@ const Message = (props) => {
 
         {!!message.content && (
           <Text style={{ color: isMe ? "black" : "white" }}>
-            {message.content}
+            {isDeleted ? (
+              <Text style={{ color: "grey", opacity: 0.5 }}>
+                message deleted
+              </Text>
+            ) : (
+              message.content
+            )}
           </Text>
         )}
 
