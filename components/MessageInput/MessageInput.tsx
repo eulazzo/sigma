@@ -110,15 +110,20 @@ const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
       attributes: { sub: userAuthId },
     } = await Auth.currentAuthenticatedUser();
 
-    const newMessage = await DataStore.save(
-      new Message({
-        content: message,
-        userID: userAuthId,
-        chatroomID: chatRoom.id,
-        replyToMessageID: messageReplyTo?.id,
-      })
-    );
-    updateLastMessage(newMessage);
+    try {
+      const newMessage = await DataStore.save(
+        new Message({
+          content: message,
+          userID: userAuthId,
+          chatroomID: chatRoom.id,
+          replyToMessageID: messageReplyTo?.id,
+        })
+      );
+
+      updateLastMessage(newMessage);
+    } catch (error) {
+      console.log(error);
+    }
     resetFields();
   };
 

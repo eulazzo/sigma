@@ -93,7 +93,7 @@ export default function ChatRoomItem({ chatRoom }) {
             <Text numberOfLines={1} style={styles.text}>
               {lastMessage?.content ||
                 `Start a conversation ${isGroup ? "on" : "with"} ${
-                  isGroup ? chatRoom.name : user?.name
+                  isGroup ? chatRoom.name : verifySpecialCaracteres(user?.name)
                 }`}
             </Text>
           </View>

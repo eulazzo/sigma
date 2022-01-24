@@ -23,19 +23,21 @@ export default function UsersScreen() {
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const [groupName, setGroupName] = useState("");
 
- 
-
   useEffect(() => {
     DataStore.query(User).then(setUsers);
   }, []);
 
   const addUserToChatRoom = async (user, chatRoom) => {
-    await DataStore.save(
-      new ChatRoomUser({
-        user,
-        chatRoom,
-      })
-    );
+    try {
+      await DataStore.save(
+        new ChatRoomUser({
+          user,
+          chatRoom,
+        })
+      );
+    } catch (error) {
+      console.log("Error:>", error);
+    }
   };
 
   const createChatRoom = async (users) => {
@@ -56,7 +58,6 @@ export default function UsersScreen() {
     const newChatRoomData = { newMessges: 0, Admin: dbUser };
 
     if (users.length > 1) {
-      console.log("mais de um user");
       newChatRoomData.name = "New group";
       newChatRoomData.imageUri =
         "https://cdn.pixabay.com/photo/2016/11/14/17/39/group-1824145_1280.png";

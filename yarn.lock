@@ -4533,6 +4533,16 @@
   "resolved" "https://registry.npmjs.org/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz"
   "version" "0.7.1"
 
+"@stablelib/base64@^1.0.1":
+  "integrity" "sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ=="
+  "resolved" "https://registry.npmjs.org/@stablelib/base64/-/base64-1.0.1.tgz"
+  "version" "1.0.1"
+
+"@stablelib/utf8@^1.0.1":
+  "integrity" "sha512-FrYD1xadah/TtAP6VJ04lDD5h9rdDj/d8wH/jMYTtHqZBv9z2btdvEU8vTxdjdkFmo1b/BH+t3R1wi/mYhCCNg=="
+  "resolved" "https://registry.npmjs.org/@stablelib/utf8/-/utf8-1.0.1.tgz"
+  "version" "1.0.1"
+
 "@types/babel__core@^7.1.7":
   "integrity" "sha512-S7unDjm/C7z2A2R9NzfKCK1I+BAALDtxEmsJBwlB3EzNfb929ykjL++1CK9LO++EIp2fQrC8O+BwjKvz6UeDyQ=="
   "resolved" "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.1.18.tgz"
@@ -5230,7 +5240,7 @@
     "mixin-deep" "^1.2.0"
     "pascalcase" "^0.1.1"
 
-"base64-js@^1.0.2", "base64-js@^1.1.2", "base64-js@^1.2.3", "base64-js@^1.3.1", "base64-js@^1.5.1":
+"base64-js@^1.0.2", "base64-js@^1.1.2", "base64-js@^1.2.3", "base64-js@^1.3.0", "base64-js@^1.3.1", "base64-js@^1.5.1":
   "integrity" "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA=="
   "resolved" "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz"
   "version" "1.5.1"
@@ -6382,6 +6392,13 @@
   "integrity" "sha512-inpfZ5X/BaTtbj2wG9PA9AC0MN8VyId6KSRlVuEg7+ziurHBy/kKDFxpOddUokhwiln2uhoYPSStJjR/tKypdw=="
   "resolved" "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-0.2.0.tgz"
   "version" "0.2.0"
+
+"expo-random@~11.2.0":
+  "integrity" "sha512-kgBJBB02iCX/kpoTHN57V7b4hWOCj4eACIQDl7bN94lycUcZu62T00P/rVZIcE/29x0GAi+Pw5ZWj0NlqBsMQQ=="
+  "resolved" "https://registry.npmjs.org/expo-random/-/expo-random-11.2.0.tgz"
+  "version" "11.2.0"
+  dependencies:
+    "base64-js" "^1.3.0"
 
 "expo-splash-screen@~0.11.2":
   "integrity" "sha512-WycJfWaBuj/W9KSgYTUHjm90VkwZ0Pv/EIqh2pW4/zw10AoSLHVgVA0CoC5R944iE42m6KWioax/0ydHU61qzA=="
@@ -11253,7 +11270,17 @@
   dependencies:
     "safe-buffer" "^5.0.1"
 
-"tweetnacl@^0.14.3", "tweetnacl@~0.14.0":
+"tweetnacl@^0.14.3":
+  "integrity" "sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q="
+  "resolved" "https://registry.npmjs.org/tweetnacl/-/tweetnacl-0.14.5.tgz"
+  "version" "0.14.5"
+
+"tweetnacl@^1.0.3":
+  "integrity" "sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw=="
+  "resolved" "https://registry.npmjs.org/tweetnacl/-/tweetnacl-1.0.3.tgz"
+  "version" "1.0.3"
+
+"tweetnacl@~0.14.0":
   "integrity" "sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q="
   "resolved" "https://registry.npmjs.org/tweetnacl/-/tweetnacl-0.14.5.tgz"
   "version" "0.14.5"

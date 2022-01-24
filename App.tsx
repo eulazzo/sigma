@@ -12,9 +12,23 @@ import { withAuthenticator } from "aws-amplify-react-native";
 import Amplify, { Auth, DataStore, Hub } from "aws-amplify";
 import config from "./src/aws-exports";
 import { Message, User } from "./src/models";
-import moment from "moment";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 Amplify.configure(config);
+
+import { box } from "tweetnacl";
+import { generateKeyPair, encrypt, decrypt } from "./utils/crypto";
+
+const obj = { hello: "world" };
+const pairA = generateKeyPair();
+const pairB = generateKeyPair();
+
+const sharedA = box.before(pairB.publicKey, pairA.secretKey);
+const encrypted = encrypt(sharedA, obj);
+
+const sharedB = box.before(pairA.publicKey, pairB.secretKey);
+const decrypted = decrypt(sharedB, encrypted);
+
+console.log(obj, encrypted, decrypted);
 
 function App() {
   const isLoadingComplete = useCachedResources();
@@ -23,6 +37,7 @@ function App() {
 
   useEffect(() => {
     // Create listener
+
     const listener = Hub.listen("datastore", async (hubData) => {
       const { event, data } = hubData.payload;
 
@@ -31,7 +46,7 @@ function App() {
         data.model === Message &&
         !["DELIVERED", "READ"].includes(data.element.status)
       ) {
-        //set the message status to delivered
+        // set the message status to delivered
         DataStore.save(
           Message.copyOf(data.element, (updated) => {
             updated.status = "DELIVERED";
@@ -42,6 +57,8 @@ function App() {
     //remove listener
     return () => listener();
   }, []);
+
+  // Amplify.Logger.LOG_LEVEL = "DEBUG";
 
   useEffect(() => {
     if (!user) return;

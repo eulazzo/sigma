@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import ChatRoomItem from "../components/ChatRoomItem";
 
-import chatRoomsData from "../assets/dummy-data/ChatRooms";
 import { Auth, DataStore } from "aws-amplify";
 import { ChatRoom, ChatRoomUser, Message } from "../src/models";
 
@@ -25,14 +24,23 @@ export default function TabOneScreen() {
     fetchChatRooms();
   }, []);
 
+  console.log(chatRooms)
+ 
+
   return (
     <View style={styles.page}>
-      <FlatList
-        data={chatRooms}
-        renderItem={({ item }) => <ChatRoomItem chatRoom={item} />}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={({ item, id }) => `${String(id)}.${Math.random()}`}
-      />
+      {chatRooms ? (
+        <FlatList
+          data={chatRooms}
+          renderItem={({ item }) => <ChatRoomItem chatRoom={item} />}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={({ item, id }) => `${String(id)}.${Math.random()}`}
+        />
+      ) : (
+        <Text style={{ color: "grey", fontSize: 20, letterSpacing: 0.3 }}>
+          Start a conversation
+        </Text>
+      )}
     </View>
   );
 }

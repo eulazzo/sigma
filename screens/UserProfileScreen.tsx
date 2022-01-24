@@ -67,6 +67,7 @@ export const UserProfileScreen = () => {
       const authUserData = (await DataStore.query(User)).find(
         (user) => user.id === authUserID
       );
+       
 
       setUser(authUserData || null);
     };
@@ -165,7 +166,7 @@ export const UserProfileScreen = () => {
         <TextInput
           placeholder={"New Nickname"}
           value={name}
-          style={{ color: "grey" }}
+          style={{ color: "gray" }}
           onChangeText={setName}
         />
       </View>

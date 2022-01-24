@@ -32,8 +32,10 @@ const Message = (props) => {
   const { showActionSheetWithOptions } = useActionSheet();
 
   useEffect(() => {
+     
     const subscription = DataStore.observe(MessageModel, message.id).subscribe(
       (msg) => {
+        console.log("elem", msg.element);
         if (msg.model === MessageModel) {
           if (msg.opType === "UPDATE") {
             setMessage((message) => ({ ...message, ...msg.element }));

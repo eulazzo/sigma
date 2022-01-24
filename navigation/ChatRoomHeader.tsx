@@ -16,7 +16,6 @@ import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 
 const ChatRoomHeader = ({ id, children }) => {
-
   const [user, setUser] = useState<User | null>(null); //the display user
   const [allUsersInGroup, setAllUsersInGroup] = useState<User[]>([]);
   const [chatRoom, setChatRoom] = useState<ChatRoom | undefined>(undefined);
@@ -46,6 +45,7 @@ const ChatRoomHeader = ({ id, children }) => {
   }, []);
 
   const verifySpecialCaracteres = (name) => {
+    console.log(name);
     if (!name) return;
     if (name.includes("@")) {
       return name.split("@")[0];
@@ -56,7 +56,7 @@ const ChatRoomHeader = ({ id, children }) => {
 
   const getLastOnlineText = () => {
     if (!user?.lastOnlineAt) return null;
-    console.log("passei aki")
+
     //if lastOnlineAt is less than 5 minutes ago, show him as online
     const lastOnlineDiffMiliSeconds = moment().diff(moment(user.lastOnlineAt));
     if (lastOnlineDiffMiliSeconds < 5 * 60 * 1000) {
@@ -77,7 +77,7 @@ const ChatRoomHeader = ({ id, children }) => {
 
   const openInfo = () => {
     //redirect to groupInfo
-    navigation.navigate("GroupInfo",{id});
+    navigation.navigate("GroupInfo", { id });
   };
 
   return (
@@ -112,7 +112,7 @@ const ChatRoomHeader = ({ id, children }) => {
             fontWeight: "bold",
           }}
         >
-          {chatRoom?.name || user?.name}
+          {chatRoom?.name || verifySpecialCaracteres(user?.name)}
         </Text>
         <Text
           maxFontSizeMultiplier={1}
