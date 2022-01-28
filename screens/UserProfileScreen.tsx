@@ -22,6 +22,7 @@ export const UserProfileScreen = () => {
   const [name, setName] = useState("");
   // const [name, setName] = useState(user.name);
   const [image, setImage] = useState(null);
+  const [userStatus, setUserStatus] = useState("");
 
   // useEffect(() => {
   //   const subscription = DataStore.observe(User, user.id).subscribe((msg) => {
@@ -67,9 +68,9 @@ export const UserProfileScreen = () => {
       const authUserData = (await DataStore.query(User)).find(
         (user) => user.id === authUserID
       );
-       
-
       setUser(authUserData || null);
+
+      if (user) setUserStatus(user.status);
     };
     fetchUser();
   }, []);
@@ -142,6 +143,8 @@ export const UserProfileScreen = () => {
     }
   };
 
+  console.log(userStatus);
+
   return (
     <View>
       <View style={styles.wrapper}>
@@ -159,6 +162,7 @@ export const UserProfileScreen = () => {
           />
         </View>
         <Text style={styles.text}>{verify()}</Text>
+        <Text style={styles.status}>{userStatus}</Text>
       </View>
 
       <View style={styles.inputContainer}>
@@ -202,6 +206,7 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   text: {
+    marginTop: 2,
     fontSize: 20,
     color: "gray",
   },
@@ -247,5 +252,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 10,
     borderRadius: 10,
+  },
+  status: {
+    fontSize: 16,
+    opacity: 0.8,
+    color: "gray",
   },
 });

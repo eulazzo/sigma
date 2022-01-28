@@ -63,7 +63,7 @@ const GroupInfoScreen = () => {
     }
 
     if (user.id === chatRoomDataInfo?.Admin?.id) {
-      Alert.alert("You are the admin, you cannot delete yourself");
+      Alert.alert("You are the admin, you cannot remove yourself");
       return;
     }
     Alert.alert(

@@ -11,7 +11,7 @@ const avatar = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
 
 export default function ChatRoomItem({ chatRoom }) {
   const [allUsersInGroup, setAllUsersInGroup] = useState<User[]>([]); //all user in this chatRoom
-  const [user, setUser] = useState<User | null>(null); //the display user
+  const [user, setUser] = useState<User | null>(null); //the displayed user
   const [lastMessage, setLastMessage] = useState<Message | undefined>();
   const navigation = useNavigation();
 
@@ -27,7 +27,7 @@ export default function ChatRoomItem({ chatRoom }) {
 
       setAllUsersInGroup(fetchedUsers);
 
-      //To not show myself on the chat room
+      //Not to show me in the chat room
       setUser(fetchedUsers.find((user) => user.id !== authUserID) || null);
     };
 
@@ -47,7 +47,6 @@ export default function ChatRoomItem({ chatRoom }) {
   };
 
   const isGroup = allUsersInGroup.length > 2;
-
 
   const verifySpecialCaracteres = (name) => {
     if (!name) return;
@@ -84,9 +83,13 @@ export default function ChatRoomItem({ chatRoom }) {
               <Text style={styles.name}>
                 {isGroup ? chatRoom.name : verifySpecialCaracteres(user?.name)}
               </Text>
-              {lastMessage?.createdAt && (
+              {lastMessage?.createdAt ? (
                 <Text style={styles.text}>
                   <TimeAgo time={lastMessage.createdAt} />
+                </Text>
+              ) : (
+                <Text style={styles.text}>
+                  10 minutes ago
                 </Text>
               )}
             </View>

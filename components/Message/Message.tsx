@@ -196,7 +196,7 @@ const Message = (props) => {
         {!!message.content && (
           <Text style={{ color: isMe ? "black" : "white" }}>
             {isDeleted ? (
-              <Text style={{ color: "grey", opacity: 0.5 }}>
+              <Text style={{ color: "gray"}}>
                 message deleted
               </Text>
             ) : (

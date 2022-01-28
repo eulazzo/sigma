@@ -9,6 +9,8 @@ import { ChatRoom, ChatRoomUser, Message } from "../src/models";
 export default function TabOneScreen() {
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
 
+   
+
   useEffect(() => {
     const fetchChatRooms = async () => {
       const {
@@ -23,9 +25,6 @@ export default function TabOneScreen() {
     };
     fetchChatRooms();
   }, []);
-
-  console.log(chatRooms)
- 
 
   return (
     <View style={styles.page}>
