@@ -38,16 +38,20 @@ For user authentication cognito Service was used, it "keep track" all users, tok
 Briefly, The first step is all about permissions. Ensure that the application has access to the user's images. Next, we have to "get the image" and as a return we have the local (Mobile) URI of the image, setting it to state.  To save the image in the cloud i have used S3 Storage.
 </p>
 
-## Sent, Read and Delived messages status 
+## SENT, READ and DELIVERED Message Status 
 <p>
 To implement this feature, the following logic was thought: </br>
 When a message is sent whether it is delivered or not we have to check if the  
 message has been successfully synced to the cloud, if the message has been saved
-in the database. Because if we don't have internet the message will appear because we are 
+in the database. 
+
+Because if we don't have internet the message will appear because we are 
 using DataStore but will not be synchronized with database. So in this case it shouldn't show any "checkmark",  once the message is successfully synced
 the status should change to DELIVERED and when the message is read to READ.
-To check if the message is saved in the database, we can "listen" for some events. DataStore events will trigger some events, we have the "outboxMutationEnqueued" dispatched when local changes have recently been prepared for synchronization. In this way, as soon as we are trying to send something for synchronization with the cloud, the mentioned event will be triggered and when it is finished the "outboxMutationProcessed" event is triggered.
-That is, listening to the outboxMutationProcessed event it is possible to change the message state from "SENT" to "DELIVERED" since we have this event as soon as a message is synchronized and saved in the database. The listener was added to the APP function, as we know that this component will always be mounted. Basically, in the app component, inside the listener function we check if the event is equal to "outboxMutationEnqueued", if so, we check if the "model" returned by the function is equal to the Message Model of our application.
+To check if the message is saved in the database, we can "listen" for some events. DataStore events will trigger some events, we have the `outboxMutationEnqueued` dispatched when local changes have recently been prepared for synchronization. In this way, as soon as we are trying to send something for synchronization with the cloud, the mentioned event will be triggered and when it is finished the `outboxMutationProcessed` event is triggered.
+
+That is, listening to the outboxMutationProcessed event it is possible to change the message state from "SENT" to "DELIVERED" since we have this event as soon as a message is synchronized and saved in the database. The listener was added to the APP function, as we know that this component will always be mounted. Basically, in the app component, inside the listener function we `check if the event is equal` to `outboxMutationProcessed`, if so, we check if the "model" returned by the function is equal to the Message Model of our application.
+
 Finally, we just set the message to DELIVERED. Finally, to view the status change in real time, we use DataStore.observe to notice changes in the Model Message opType and set the message's new state. To set the status as "READ", it is enough to check if the message is not mine and if the message does not already contain "READ" status, if ok in this verification, a copy is made in the DataStore using the new state of the message specifying which status(Message).
 </p>
 
