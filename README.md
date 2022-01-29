@@ -9,8 +9,8 @@
 
 # Sigma
 
-<p>Application with the purpose of sending messages on secure way to our friends</p>
-<p>Sigma app inspired by Signal Ui made in React Native and AWS Amplify.</p>
+<p>Sigma is a secure Realtime Chat App</p>
+<p>Was inspired by Signal Ui made in React Native and AWS Amplify.</p>
 <p>Developed with <code>React Native</code>, <code>Aws Amplify</code>,<code>Expo Vector Icons</code>,</br><code>Cognito</code>,
 <code>expo-av</code> ,<code> expo-image-picker</code>  
 and <code>TweetNaCl</code> </p> 
