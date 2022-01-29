@@ -39,7 +39,7 @@ For user authentication, cognito Service was used.It keep track all users, token
 
 ## Upload of images
 <p>
-Briefly, The first step is `all about permissions`. Ensure that the application has access to the user's images. Next, we have to picker the image from device and as a return we have the `local (Mobile) URI of the image`, setting it to state.  To save the image in the cloud i have `used S3 Storage`.
+Briefly, The first step is all about permissions. Ensure that the application has access to the user's images. Next step, was to picker the image from device and as a return we have the local (Mobile) URI of the image, setting it to state.  To save the image in the cloud i have used S3 Storage.
 </p>
 
 ## SENT, READ and DELIVERED Message Status 
@@ -64,7 +64,7 @@ That is, listening to the outboxMutationProcessed event it is possible to change
  
 ## :camera: See the app's features till now:
 
-<h2>Send message and DELIVERED status is settled when user views the message</h2>
+<h2>DELIVERED status is set when the user views the message</h2>
 
 <h1>
    <img alt="sigma" src="github/1-receveidMessage.gif " width="250px" />
