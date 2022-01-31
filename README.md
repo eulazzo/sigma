@@ -3,7 +3,7 @@
 </h1>
 
 <div align="center">
-  <h1>Sigma - A secure Realtime Chat App Inspired By Signal UI Made In React Native and AWS Amplify</h1>
+  <h1>Sigma - A Secure Realtime Chat App </h1>
 </div>
 
 <p align="center" >
