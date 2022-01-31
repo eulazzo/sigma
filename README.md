@@ -3,7 +3,7 @@
 </h1>
 
 <div align="center">
-  <h1>Sigma - A secure Realtime Chat App inspired by Signal Ui made in React Native and AWS Amplify</h1>
+  <h1>Sigma - A secure Realtime Chat App Inspired By Signal UI Made In React Native and AWS Amplify</h1>
 </div>
 
 <p align="center" >
@@ -16,17 +16,13 @@
 
 <p align="center">
   <a href="https://github.com/eulazzo" target="_blank">
-    <img src="https://img.shields.io/static/v1?label=author&message=eulazzo&color=d1d1d1&labelColor=3777f0" alt="Github"> 
+    <img src="https://img.shields.io/static/v1?label=author&message=eulazzo&color=f2f2f2&labelColor=03cafc" alt="Github"> 
   </a>
-    <img src="https://img.shields.io/github/stars/eulazzo/sigma?color=d1d1d1&labelColor=3777f0" alt="Stars">
-  <img src="https://img.shields.io/github/last-commit/eulazzo/sigma?color=d1d1d1&labelColor=3777f0" alt="Commits">
-  <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=d1d1d1&labelColor=3777f0" alt="License">
+    <img src="https://img.shields.io/github/stars/eulazzo/sigma?color=f2f2f2&labelColor=03cafc" alt="Stars">
+  <img src="https://img.shields.io/github/last-commit/eulazzo/sigma?color=f2f2f2&labelColor=03cafc" alt="Commits">
+  <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=f2f2f2&labelColor=03cafc" alt="License">
 </p>
 
-
-
- 
- 
 <h1 align="center">
    <img alt="sigma" src="github/allScrenToNow.gif" width="250px" />
 </h1>
