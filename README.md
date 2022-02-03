@@ -58,10 +58,6 @@ For user authentication, cognito Service was used.It keep track all users, token
    For this, it was necessary to make some settings. On the terminal i typed `amplify auth update` and follow a few steps until the last question where it shows the option `which trigger do you want to enable for cognito?` just choose `Post Confirmation` and then choose to add the lambda function with the purpose of save user data in DynanoDB.
 </p>
 
-## Upload of images
-<p>
-Briefly, The first step is all about permissions. Ensure that the application has access to the user's images. Next step, was to picker the image from device and as a return we have the local (Mobile) URI of the image, setting it to state.  To save the image in the cloud i have used S3 Storage.
-</p>
 
 ## SENT, READ and DELIVERED Message Status 
 <p>
@@ -81,7 +77,10 @@ That is, listening to the outboxMutationProcessed event it is possible to change
 `Finally`, we just set the message to `DELIVERED`. To view the status change in real time, we use DataStore.observe to notice changes in the Model Message opType and set the message's new state. To set the status as "READ", it is enough to check if the message is not mine and if the message does not already contain "READ" status, if ok in this verification, a copy is made in the DataStore using the new state of the message specifying which status(Message).
 </p>
 
-
+## Upload of images
+<p>
+Briefly, The first step is all about permissions. Ensure that the application has access to the user's images. Next step, was to picker the image from device and as a return we have the local (Mobile) URI of the image, setting it to state.  To save the image in the cloud i have used S3 Storage.
+</p>
  
 ## :camera: See the app's features till now:
 
