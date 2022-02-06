@@ -100,7 +100,7 @@ Briefly, The first step is all about permissions. Ensure that the application ha
  
 ## See the app's features till now:
 
-### Delivred status set when the user views the message
+### Delivered status set when the user views the message
 
 <h1>
    <img alt="sigma" src="github/1-receveidMessage.gif " width="250px" />
