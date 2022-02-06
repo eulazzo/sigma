@@ -64,7 +64,7 @@ However,the users from the app contain photos and names, just Authentication is 
 
 ## Sent, read and Delivered Message Status 
 
-### To implement this feature, the following logic was thought: </br>
+### To implement this feature, the following logic was thought </br>
 <p>
 When a message is sent whether it is delivered or not we have to check if the  
 message has been successfully synced to the cloud, if the message has been saved
