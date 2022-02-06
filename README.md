@@ -27,16 +27,15 @@
    <img alt="sigma" src="github/allScrenToNow.gif" width="250px" />
 </h1>
 
-# Sigma
+## About the project
+
+#### Sigma
 
 <p>Sigma is a secure Realtime Chat App.
  Was inspired by Signal Ui.</p>
 <p>Developed with <code>React Native</code>, <code>Aws Amplify</code>,<code>Expo Vector Icons</code>,</br><code>Cognito</code>,
 <code>expo-av</code> ,<code> expo-image-picker</code>  
 and <code>TweetNaCl</code> </p> 
-
-
-## A little about how the project works:
 
 #### Functionalities:
 - Send messages, images (Gallery or Camera), audios.
