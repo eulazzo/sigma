@@ -63,7 +63,7 @@ However,the users from the app contain photos and names, just Authentication is 
    For this, it was necessary to make some settings. On the terminal i typed <code>amplify auth update</code> and follow a few steps until the last question where it shows the option <code>which trigger do you want to enable for cognito?</code>  just choose <code>Post Confirmation</code>  and then choose to add the lambda function with the purpose of save user data in DynanoDB.
 </p>
 
-## SENT, READ and DELIVERED Message Status 
+## Sent, read and Delivered Message Status 
 
 ### To implement this feature, the following logic was thought: </br>
 <p>
