@@ -98,45 +98,45 @@ To view the status change in real time, we use DataStore.observe to notice chang
 Briefly, The first step is all about permissions. Ensure that the application has access to the user's images. Next step, was to picker the image from device and as a return we have the local (Mobile) URI of the image, setting it to state.  To save the image in the cloud i have used S3 Storage.
 </p>
  
-## :camera: See the app's features till now:
+## See the app's features till now:
 
-<h2>DELIVERED status is set when the user views the message</h2>
+### Delivred status set when the user views the message
 
 <h1>
    <img alt="sigma" src="github/1-receveidMessage.gif " width="250px" />
 </h1>
 
-<h2>Reply to a message</h2>
+### Reply to a message 
 
 <h1>
    <img alt="sigma" src="github/2-reply.gif " width="250px" />
 </h1>
 
-<h2>Delete Message</h2>
+### Delete Message 
 
 <h1>
    <img alt="sigma" src="github/3-deletingMessages.gif" width="250px" />
 </h1>
 
-<h2>Trying to delete another user's message</h2>
+### Trying to delete another user's message 
 
 <h1>
    <img alt="sigma" src="github/4-deletingFriendsMessage.gif" width="250px" />
 </h1>
 
-<h2>Groups and remove some users</h2>
+### Groups and remove some users 
 
 <h1>
    <img alt="sigma" src="github/5-creatingGroups.gif" width="250px" />
 </h1>
 
-<h2>Send Images</h2>
+### Send Images 
 
 <h1>
    <img alt="sigma" src="github/6-sendingImages.gif" width="250px" />
 </h1>
 
-<h2>Take photos and send them</h2>
+### Take photos and send them 
 
 <h1>
    <img alt="sigma" src="github/7-takingAndSendingPhotos.gif" width="250px" />
