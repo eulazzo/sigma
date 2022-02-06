@@ -38,7 +38,7 @@ and <code>TweetNaCl</code> </p>
 
 ## A little about how the project works:
 
-Functionalities:
+#### Functionalities:
 - Send messages, images (Gallery or Camera), audios.
 - User Online/Offline status and last seen.
 - SENT/READ/DELIVERED message status
