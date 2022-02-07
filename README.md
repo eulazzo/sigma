@@ -7,7 +7,7 @@
 </div>
 
 <p align="center" >
-  <a href="#-sobre-a-aplica%C3%A7%C3%A3o"> About </a> &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;
+  <a href="#about-the-project"> About </a> &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;
   <a href="#-tecnologias">Techs</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-conteúdos-aplicados"> Content</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-suporte"> Suport </a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -27,7 +27,12 @@
    <img alt="sigma" src="github/allScrenToNow.gif" width="250px" />
 </h1>
 
-## About the project
+* [About the project](#about-the-project)
+   * [Features](#features)
+* [User Authentication with Cognito](#user-authentication-with-cognito)
+   * [Lambda functions](#lambda-functions)
+* 
+## About the project 
 
 #### Sigma
 
@@ -37,7 +42,7 @@
 <code>expo-av</code> ,<code> expo-image-picker</code>  
 and <code>TweetNaCl</code> </p> 
 
-#### Functionalities:
+#### Features:
 - Send messages, images (Gallery or Camera), audios.
 - User Online/Offline status and last seen.
 - SENT/READ/DELIVERED message status
