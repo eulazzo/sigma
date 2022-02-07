@@ -31,7 +31,24 @@
    * [Features](#features)
 * [User Authentication with Cognito](#user-authentication-with-cognito)
    * [Lambda functions](#lambda-functions)
-* 
+   * [Sent, read and Delivered Message Status](#Sent-read-and-delivered-message-status) 
+   * [DataStore events (Checking if the message was saved)](#dataStore-events-checking-if-the-message-was-saved) 
+   * [OutboxMutationProcessed event and how to change the message status](#outboxmutationprocessed-event-and-how-to-change-the-message-status) 
+   * [Status changes in real time](#status-changes-in-real-time)
+   * [Upload of images](#upload-of-images)
+*  [App features so far (GIFS)](#app-features-so-far) 
+   * [Delivered status set when the user views the message  ](#delivered-status-set-when-the-user-views-the-message)  
+   * [Reply to a message](#reply-to-a-message)
+   * [Delete Message](#delete-Message )
+   * [Trying to delete another user's message](#trying-to-delete-another-users-message) Trying to delete another user's message 
+   * [Groups and remove some users](#groups-and-remove-some-users)  
+   * [Send Images](#send-mages) 
+   * [Take photos and send them](#take-photos-and-send-them )
+* [Getting started](#getting-started)
+* [Technologies](#technologies)
+* [License](#license)
+
+
 ## About the project 
 
 #### Sigma
@@ -67,9 +84,9 @@ However,the users from the app contain photos and names, just Authentication is 
    For this, it was necessary to make some settings. On the terminal i typed <code>amplify auth update</code> and follow a few steps until the last question where it shows the option <code>which trigger do you want to enable for cognito?</code>  just choose <code>Post Confirmation</code>  and then choose to add the lambda function with the purpose of save user data in DynanoDB.
 </p>
 
-## Sent, read and Delivered Message Status 
+### Sent, read and Delivered Message Status 
 
-### To implement this feature, the following logic was thought </br>
+#### To implement this feature, the following logic was thought </br>
 <p>
 When a message is sent whether it is delivered or not we have to check if the  
 message has been successfully synced to the cloud, if the message has been saved
@@ -91,18 +108,18 @@ DataStore events will trigger some events, we have the <code>outboxMutationEnque
 That is, listening to the <code>outboxMutationProcessed event</code> it is possible to change the message state from <code>SENT</code> to <code>DELIVERED</code> since we have this event as soon as a message is synchronized and saved in the database. The listener was added to the APP function, as we know that this component will always be mounted. Basically, in the app component, inside the listener function we  <code>check if the event is equal</code> to <code>outboxMutationProcessed</code>. If so, we check if the <code>MODEL</code> returned by the function is equal to the Message Model of our application. <code>Finally</code>, we just set the message to <code>DELIVERED</code>. 
 </p>
  
-### Status change in real time
+### Status changes in real time
 
 <p>
 To view the status change in real time, we use DataStore.observe to notice changes in the Model Message opType and set the message's new state. To set the status as <code>READ</code> , it is enough to check if the message is not mine and if the message does not already contain <code>READ</code> status, if ok in this verification, a copy is made in the DataStore using the new state of the message specifying which status(Message).
 </p>
 
-## Upload of images
+### Upload of images
 <p>
 Briefly, The first step is all about permissions. Ensure that the application has access to the user's images. Next step, was to picker the image from device and as a return we have the local (Mobile) URI of the image, setting it to state.  To save the image in the cloud i have used S3 Storage.
 </p>
  
-## See the app's features till now:
+## App features so far:
 
 ### Delivered status set when the user views the message
 
@@ -156,7 +173,7 @@ Briefly, The first step is all about permissions. Ensure that the application ha
 
 
 
-## :rocket: Technologies
+## Technologies
 
 <table>
    
