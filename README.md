@@ -62,13 +62,13 @@
 and <code>TweetNaCl</code> </p> 
 
 #### Features:
-- Send messages, images (Gallery or Camera), audios.
-- User Online/Offline status and last seen.
-- SENT/READ/DELIVERED message status
-- create Groups and remove users
-- Delete messages
-- Message Replies
-
+- [X] Send messages, images (Gallery or Camera), audios.
+- [X] User Online/Offline status and last seen.
+- [X] SENT/READ/DELIVERED message status
+- [X] Create Groups and remove users
+- [X] Message Replies
+- [X] Send Emojis
+- [ ] Encrypted messages
 
 ## User Authentication with Cognito
 
