@@ -18,7 +18,7 @@
   <a href="https://github.com/eulazzo" target="_blank">
     <img src="https://img.shields.io/static/v1?label=author&message=eulazzo&color=f2f2f2&labelColor=3777f0" alt="Github"> 
   </a>
-    <img src="https://img.shields.io/github/stars/eulazzo/sigma?color=f2f2f2&labelColor=3777f0" alt="Stars">
+   <img src="https://img.shields.io/github/stars/eulazzo/sigma?color=f2f2f2&labelColor=3777f0" alt="Stars">
   <img src="https://img.shields.io/github/last-commit/eulazzo/sigma?color=f2f2f2&labelColor=3777f0" alt="Commits">
   <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=f2f2f2&labelColor=3777f0" alt="License">
 </p>
