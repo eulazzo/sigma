@@ -33,7 +33,7 @@
    * [Features](#features)
 * [User Authentication with Cognito](#user-authentication-with-cognito)
    * [Lambda functions](#lambda-functions)
-   * [Sent, read and Delivered Message Status](#sent-read-and-delivered-message-status) 
+   * [Sent, Read and Delivered Message Status](#sent-read-and-delivered-message-status) 
    * [DataStore events (Checking if the message was saved)](#datastore-events-checking-if-the-message-was-saved) 
    * [OutboxMutationProcessed event and how to change the message status](#outboxmutationprocessed-event-and-how-to-change-the-message-status) 
    * [Status changes in real time](#status-changes-in-real-time)
